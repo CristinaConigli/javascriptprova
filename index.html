@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Find the treasure</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Reset */
+        body,
+        html {
+            font-family: 'Intro', Arial, Helvetica, sans-serif;
+            line-height: 1;
+            font-size: 16px;
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        *,
+        *:before,
+        *:after {
+            box-sizing: border-box;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        p,
+        ol,
+        ul {
+            margin: 0 0 1rem 0;
+            padding: 0;
+        }
+
+        ol,
+        ul {
+            padding-left: 20px;
+            line-height: 1.5;
+        }
+
+        img {
+            height: auto;
+        }
+
+        h1 {
+            font-size: 4rem;
+        }
+
+        h2 {
+            font-size: 3rem;
+        }
+
+        h3 {
+            font-size: 2rem;
+        }
+
+        h4 {
+            font-size: 1rem;
+        }
+
+        h5 {
+            font-size: 0.8rem;
+        }
+
+        h6 {
+            font-size: 0.6rem;
+        }
+
+        a {
+            text-decoration: none
+        }
+        img{
+            justify-content: center;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <h1 id="header">Find the treasure! </h1>
+
+    <img id="map" width="400" height="400"
+        src="https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/b637e128570183.55c740e9c017c.jpg">
+    <p id="distance"></p>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function() {
+        let getRandomNumber = function(size) {
+            return Math.floor(Math.random() * size);
+        };
+
+        let width = 400;
+        let height = 400;
+        let click = 0;
+        let target = {
+            x: getRandomNumber(width),
+            y: getRandomNumber(height)
+        };
+
+        let getDistance = function(event, target) {
+            let diffX = event.offsetX - target.x;
+            let diffY = event.offsetY - target.y;
+            return Math.sqrt((diffX * diffX) + (diffY * diffY));
+        };
+
+        var getDistanceHint = function(distance) {
+            if (distance < 10) {
+                return 'fuocone';
+            } else if (distance < 20) {
+                return 'fuochino';
+            } else if (distance < 40) {
+                return 'fuoco';
+            } else if (distance < 80) {
+                return 'caldo';
+            } else if (distance < 160) {
+                return 'tiepido';
+            } else if (distance < 320) {
+                return 'freddino';
+            } else {
+                return 'freddo';
+            }
+        };
+
+        $('#map').click(function(event) {
+            click++;
+            let distance = getDistance(event, target);
+            let distanceHint = getDistanceHint(distance);
+            $('#distance').text(distanceHint);
+            if (distance < 8) {
+                alert('Ti mancano ' + click + ' click');
+            }
+        });
+    });
+</script>
+
+
+</body>
+
+</html>
